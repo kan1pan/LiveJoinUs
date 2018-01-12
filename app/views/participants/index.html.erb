@@ -1,0 +1,44 @@
+<div class="container">
+  <div class="wrapper col-md-12 top_area">
+    <% if params[:name].blank? %>
+      <h2>参加予定イベント一覧</h2>
+      <% if @participants.blank? %>
+          <h2>現在、参加予定のイベントはありません。</h2>
+      <% else %>
+        <% @participants.each do |participant| %>
+          <div class="event_menu clearfix">
+            <%= link_to event_path(participant.event) do %>
+              <strong><%= participant.event.title %></strong><br>
+            <% end %>
+            <%= participant.event.date %><br>
+            <%= photo_img(participant.event) %>
+            <% if participant.event.content.length > 500  %>
+              <%= participant.event.content.truncate(535) %>
+              <%= link_to "詳細を表示", event_path(participant.event) %><br>
+            <% else %>
+              <%= participant.event.content %>
+            <% end %>
+            <div class="content_btn">
+              <%= link_to "イベント参加を取り止める", {controller:"participants", action:"confirm", id:participant.event.id}, method: 'post',  class: 'btn btn-default' %>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    <% else %>
+      <h2>イベント参加者一覧</h2>
+      <% if @participants.blank? %>
+          <h2>現在、イベント参加者はいません。</h2>
+      <% else %>
+        <% @participants.each do |participant| %>
+          <div class="artist_menu col-md-12 clearfix">
+            <%= link_to artist_path(participant.artist) do %>
+              <strong><%= participant.artist.name %></strong><br>
+            <% end %>
+            <%= profile_img_artist(participant.artist) %>
+            <%= participant.artist.self_introduction %>
+          </div>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+</div>

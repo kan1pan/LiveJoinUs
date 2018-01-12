@@ -1,0 +1,12 @@
+<div class="container">
+  <div class="wrapper">
+    <h2>マイページ</h2>
+    <div class="detail_screen col-md-12 col-sm-12 col-xs-12">
+        <%= link_to "ユーザー情報編集", edit_user_registration_path(current_user.id), class: 'btn btn-default btn-block' %><br>
+        <%= link_to "作成イベント一覧", myevents_events_path, class: 'btn btn-info btn-block' %><br>
+        <%= link_to "気になるアーティスト一覧", artists_path, class: 'btn btn-warning btn-block' %><br>
+        <%= link_to "逆指名送信一覧", reversenominations_path, class: 'btn btn-danger btn-block' %><br>
+        <%= link_to "メッセージ一覧", conversations_path(sender_id: current_user.id, recipient_id: @organizer.id), class: 'btn btn-primary btn-block'  %>
+    </div>
+  </div>
+</div>

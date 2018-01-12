@@ -1,0 +1,6 @@
+<%= link_to "最初" , {action:'search', page: 1, id: id }, remote:true, method:'post' unless @results.first_page? %>
+<%= link_to '前', {action:'search', page:@results.prev_page, id: id  }, remote:true, method:'post' unless @results.first_page? %>
+<%= @results.current_page %>
+<%= link_to @results.next_page, {action:'search', page:@results.next_page, id: id  }, remote:true, method:'post' unless @results.last_page? %>
+<%= link_to "次", {action:'search', page:@results.next_page, id: id }, remote:true, method:'post' unless @results.last_page? %>
+<%= link_to "最後", {action:'search', page:@results.total_pages, id: id  }, remote:true, method:'post'  unless @results.last_page? %>

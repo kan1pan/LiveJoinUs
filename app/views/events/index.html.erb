@@ -1,0 +1,86 @@
+  <div class="row">
+    <div class="wrapper col-md-12">
+      <section class="main-header">
+          <p class="flash"><%= notice %><%= alert %></p>
+      </section>
+    </div>
+  </div>
+  <div class="row">
+    <div class="top_area col-md-12 col-sm-12 col-xs-12">
+      <div class="wrapper col-md-3 col-sm-12">
+        <h2>ジャンル別イベント一覧</h2>
+        <% Event.genres.each do |evnt| %>
+          <%= link_to bygenre_events_path(genre_id:evnt[1]) do  %>
+            <div class="osusume_area">
+              <%= evnt[0] %>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+      <div class="wrapper col-md-6 col-sm-12">
+        <h2>イベント情報</h2>
+        <% @events.each do |event| %>
+          <div class="event_menu clearfix">
+            <%= link_to event_path(event) do %>
+              <strong><%= event.title %></strong><br>
+            <% end %>
+            <%= event.date %><br>
+            <%= photo_img(event) %>
+            <% if event.content.length > 50  %>
+              <%= simple_format(event.content.truncate(140)) %>
+              <%= link_to "詳細を表示", event_path(event) %><br>
+            <% else %>
+              <%= simple_format(event.content) %>
+            <% end %>
+            <div class="content_btn">
+              <% if user_signed_in? %>
+                <% if current_user.organizer_flg? %>
+                  <% if event.organizer.user_id == current_user.id  %>
+                    <%= link_to "編集", edit_event_path(event.id), class: 'btn btn-default btn-sm btn-success' %>
+                    <%= link_to "削除", event_path(event.id), method: :delete, data: { confirm: '本当に削除していいですか？'}, class: 'btn btn-default btn-sm btn btn-danger' %>
+                  <% end %>
+                <% else %>
+                  <% if check_participant(event.id) == nil %>
+                    <%= link_to "イベントに参加する", {controller:"events", action:"participation", id:event.id}, class: 'btn btn-danger' %>
+                  <% else %>
+                    <%= link_to "イベント参加を取り止める", {controller:"participants", action:"confirm", id:event.id}, method: 'post', class: 'btn btn-default' %>
+                  <% end %>
+                <% end %>
+              <% else %>
+                <%= link_to "イベントに参加する", {controller:"events", action:"participation", id:event.id}, class: 'btn btn-danger' %>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+        <%= paginate @events %>
+      </div>
+      <div class="wrapper col-md-3 col-sm-6 col-xs-12">
+        <div class="wrapper col-md-3col-sm-6 col-xs-12">
+          <h2>おすすめアーティスト</h2>
+          <% @artists.each do |artist| %>
+            <%=link_to artist_path(artist) do %>
+              <div class="osusume_area">
+                <div class="prof_img col-md-2 col-sm-6 col-xs-6">
+                  <%= profile_img_artist(artist) %>
+                </div>
+                <%= artist.name %>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+        <div class="wrapper col-md-6col-sm-6 col-xs-12">
+          <h2>注目のアーティスト</h2>
+          <% @artists.each do |artist| %>
+            <%=link_to artist_path(artist) do %>
+              <div class="osusume_area">
+                <div class="prof_img col-md-2 col-sm-6 col-xs-6">
+                  <%= profile_img_artist(artist) %>
+                </div>
+                <%= artist.name %>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>

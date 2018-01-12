@@ -1,0 +1,55 @@
+<div class="container">
+  <div class="wrapper">
+    <h2>マイページ</h2>
+    <div class="detail_screen clearfix">
+      <div class="all_area col-md-12">
+        <div class="left_area col-md-6">
+          <div class="artist_image_area col-md-10">
+            <%= profile_img_artist(@artist) %>
+          </div>
+          <div class="organizer_info col-md-10">
+            <h3>【プロモーション音声】</h3>
+            <% unless @artist.singing.blank? %>
+              <%= audio_tag @artist.singing, autoplay: false, controls: true %>
+            <% else %>
+              <p>プロモーション音声は設定されていません。</p>
+            <% end %>
+            <h3>【プロモーション動画】</h3>
+            <% unless @artist.play_video.blank? %>
+              <%= video_tag(@artist.play_video_url.to_s, autoplay: false, controls: true, size:'300x250', poster:' thumbnail.jpg') %>
+            <% else %>
+              <p>プロモーション動画は設定されていません。</p>
+            <% end %>
+          </div>
+        </div>
+        <div class="artist_content col-md-6 col-xs-10">
+          <h2>【アーティスト紹介】</h2>
+          <%= simple_format(@artist.self_introduction) %>
+        </div>
+      </div>
+      <div class="btn_area">
+        <div class="menu_btn">
+          <% if params[:id] == @loginUser.id.to_s %>
+            <%= link_to 'マイページを編集する', edit_artist_path(@artist.id), id:'mypage_edit', class:'btn btn-default' %>
+            <%= link_to 'ユーザー情報を編集する', edit_user_registration_path(current_user.id), class:'btn btn-danger' %>
+          <% end %>
+          <% if current_user.organizer_flg %>
+            <%= link_to '逆指名', root_path , class: 'btn btn-default btn-sm btn-success' %>
+            <%= link_to "メッセージ送る", conversations_path(sender_id: current_user.id, recipient_id: @artist.id), method: 'post' %>
+            <%= render 'follow_form', artist: @artist %>
+          <% else %>
+            <% if params[:id] == @loginUser.id.to_s %>
+              <%= link_to "メッセージ一覧", conversations_path(sender_id: current_user.id, recipient_id: @artist.id), class: 'btn btn-primary' %>
+              <%= link_to "気になるアーティスト一覧へ", artists_path, class: 'btn btn-warning' %>
+              <%= link_to "参加予定イベント一覧へ", participants_path(id: @artist.id), class: 'btn btn-info' %>
+            <% else %>
+              <%= link_to "メッセージ送る", conversations_path(sender_id: current_user.id, recipient_id: @artist.id), method: 'post' %>
+              <%= render 'follow_form', artist: @artist %>
+            <% end %>
+          <% end %>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,40 @@
+<div class="container">
+    <div class="col-md-6 col-md-offset-3 col-sm-10 col-sm-offset-1">
+        <h3>以下の内容で、登録する。</h3>
+
+        <%= form_for(@artist) do |f| %>
+
+            <%= f.hidden_field :name %>
+            <%= f.hidden_field :genre %>
+            <%= f.hidden_field :self_introduction %>
+            <%= f.hidden_field :avatar %>
+            <%= f.hidden_field :avatar_cache %>
+            <%= f.hidden_field :singing %>
+            <%= f.hidden_field :singing_cache %>
+            <%= f.hidden_field :play_video %>
+            <%= f.hidden_field :play_video_cache %>
+
+            <p><%= profile_img_artist(@artist) %></p>
+            <p>アーティスト名：<%= @artist.name %></p>
+            <p>ジャンル：<%= @artist.genre %></p>
+            <p>アーティスト紹介：<%= simple_format(@artist.self_introduction) %></p>
+            <%= f.submit "登録",class: 'btn btn-primary btn-block'  %><br>
+        <% end %>
+
+        <%= form_for(@artist, url: new_artist_path, method:'get') do |f| %>
+        <%= f.hidden_field :name %>
+        <%= f.hidden_field :genre %>
+        <%= f.hidden_field :self_introduction %>
+        <%= f.hidden_field :avatar %>
+        <%= f.hidden_field :avatar_cache %>
+        <%= f.hidden_field :singing %>
+        <%= f.hidden_field :singing_cache %>
+        <%= f.hidden_field :play_video %>
+        <%= f.hidden_field :play_video_cache %>
+          <div class="confirm_area_btn">
+            <%= f.submit "もどる", name:'back', class: 'btn btn-default btn-block' %>
+          </div>
+        <% end %>
+        <br>
+    </div>
+</div>

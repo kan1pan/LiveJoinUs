@@ -1,0 +1,14 @@
+.organizer_area {
+  margin-bottom: 140px;
+}
+
+.organizer_area > .new_organizer > textarea {
+  height: 200px;
+}
+
+.organizer_content {
+  max-height: 100%;
+  margin-left: 530px;
+  word-wrap: break-word;
+  overflow: scroll;
+}

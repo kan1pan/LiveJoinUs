@@ -1,0 +1,53 @@
+<div class="container">
+  <div class="wrapper">
+    <h2>逆指名送信入力フォーム</h2>
+      <div class="reversenomination_area col-md-12 col-sm-12 col-xs-12">
+        <%=form_for(@reversenomination, url:{controller:'reversenominations', action:'confirm', event_id:@event.id, artist_id:@artist.id, method:'post'}) do |f| %>
+          <h2>【アーティスト情報】</h2>
+          <div class="artist_field">
+            <%= @artist.name %><br>
+            <div class="artist_image_area">
+              <%= profile_img_artist(@artist) %>
+            </div>
+          </div>
+          <h2>【イベント情報】</h2><br>
+            <h4><strong>イベントタイトル：<%= @event.title %></strong></h4>
+            <div class="event_image_area">
+              <%= photo_img(@event) %>
+            </div>
+            <div class="reversenomination_content">
+              <h4><strong>イベント内容：</strong></h4>
+              <%= simple_format(@event.content) %>
+            </div>
+          <h2>【逆指名特典情報】</h2>
+          <%=f.text_area :privilege, class: 'form-control' %><br>
+          <h2>【逆指名送信に関する注意事項】</h2>
+          <div class="reversenomination_caution">
+            <p>注意事項色々書きますーーーーーーーーーーーーーーーー♪</p>
+            <p>注意事項色々書きますーーーーーーーーーーーーーーーー♪</p>
+            <p>注意事項色々書きますーーーーーーーーーーーーーーーー♪</p>
+            <p>注意事項色々書きますーーーーーーーーーーーーーーーー♪</p>
+            <p>注意事項色々書きますーーーーーーーーーーーーーーーー♪</p>
+            <p>注意事項色々書きますーーーーーーーーーーーーーーーー♪</p>
+            <p>注意事項色々書きますーーーーーーーーーーーーーーーー♪</p>
+            <p>注意事項色々書きますーーーーーーーーーーーーーーーー♪</p>
+            <p>注意事項色々書きますーーーーーーーーーーーーーーーー♪</p>
+            <p>注意事項色々書きますーーーーーーーーーーーーーーーー♪</p>
+            <p>注意事項色々書きますーーーーーーーーーーーーーーーー♪</p>
+            <p>注意事項色々書きますーーーーーーーーーーーーーーーー♪</p>
+            <p>注意事項色々書きますーーーーーーーーーーーーーーーー♪</p>
+            <p>注意事項色々書きますーーーーーーーーーーーーーーーー♪</p>
+            <p>注意事項色々書きますーーーーーーーーーーーーーーーー♪</p>
+            <p>注意事項色々書きますーーーーーーーーーーーーーーーー♪</p>
+            <p>注意事項色々書きますーーーーーーーーーーーーーーーー♪</p>
+            <p>注意事項色々書きますーーーーーーーーーーーーーーーー♪</p>
+            <p>注意事項色々書きますーーーーーーーーーーーーーーーー♪</p>
+            <p>注意事項色々書きますーーーーーーーーーーーーーーーー♪</p>
+            <p>注意事項色々書きますーーーーーーーーーーーーーーーー♪</p>
+          </div><br>
+          <%= f.submit '確認画面', class: 'btn btn-primary btn-block' %><br>
+          <%= link_to 'topに戻る', root_path, class:'btn btn-default btn-block' %>
+        <% end %>
+      </div>
+  </div>
+</div>

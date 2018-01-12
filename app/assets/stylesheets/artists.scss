@@ -1,0 +1,60 @@
+.artist_area {
+  margin-bottom: 140px;
+}
+
+.artist_image_area {
+  width: auto;
+}
+
+.artist_content {
+  width: auto;
+  max-height: 100%;
+  word-wrap: break-word;
+  overflow: scroll;
+}
+
+.artist_list {
+  margin-bottom: 120px;
+
+  .left_area {
+    .row {
+      width: auto;
+      height: 400px;
+      margin: 10px 10px;
+      padding: 10px;
+      border: double 10px black;
+    }
+  }
+}
+
+.artists {
+  padding-top: 13px;
+  padding-bottom: 13px;
+}
+
+.follow {
+  padding-top: 13px;
+  padding-bottom: 13px;
+}
+
+.btn_menu {
+  position: absolute;
+  bottom: 50px;
+  right: 60px;
+  .reverse_btn {
+    text-align: right;
+  }
+  .artist_detail_btn {
+    text-align: right;
+  }
+}
+
+.clearfix:after{
+  content: "";
+  display: block;
+  clear: both;
+}
+
+a#mypage_edit {
+  text-align: right;
+}

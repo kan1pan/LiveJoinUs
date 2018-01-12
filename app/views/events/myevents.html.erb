@@ -1,0 +1,30 @@
+<% if @events.blank? %>
+  <div class="none_result">
+    <h2>イベントがまだ登録されていません。</h2>
+  </div>
+<% else %>
+  <% @events.each do |event| %>
+    <div class="event_menu clearfix">
+      <%= link_to event_path(event) do %>
+        <strong><%= event.title %></strong><br>
+      <% end %>
+      <%= event.date %><br>
+      <%= photo_img(event) %>
+      <% if event.content.length > 500  %>
+        <%= event.content.truncate(535) %>
+        <%= link_to "詳細を表示", event_path(event) %><br>
+      <% else %>
+        <%= event.content %>
+      <% end %>
+      <div class="content_btn">
+        <% if user_signed_in? %>
+          <% if current_user.organizer_flg? %>
+            <%= link_to "編集", edit_event_path(event.id), class: 'btn btn-default btn-sm btn-success' %>
+            <%= link_to "削除", event_path(event.id), method: :delete, data: { confirm: '本当に削除していいですか？'}, class: 'btn btn-default btn-sm btn btn-danger' %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+    <%= paginate @events %>
+  <% end %>
+<% end %>

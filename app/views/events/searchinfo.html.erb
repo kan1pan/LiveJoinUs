@@ -1,0 +1,40 @@
+<div class="container">
+  <div class="wrapper">
+    <% if params[:link_name] == 'event' %>
+      <h2>イベント検索</h2>
+      <div class="search_word">
+        <h2>検索条件入力フォーム</h2>
+        <%= search_form_for(@q, url:search_events_path(id:'event'), remote:true, method:'post')  do |f| %>
+          <%= f.label :イベントタイトル %>
+          <%= f.search_field :title_cont, class: 'form-control' %>
+          <%= f.label :開催日 %>
+          <%= f.date_select :date_gteq, include_blank: true, class: 'form-control' %>〜
+          <%= f.date_select :date_lteq, include_blank: true, class: 'form-control' %><br>
+          <%= f.label :フリーワード %>
+          <%= f.search_field :content_cont, class: 'form-control' %><br>
+          <div class="search_btn">
+            <%= f.submit '検索', class: 'btn btn-primary' %>
+          </div>
+        <% end %>
+      </div>
+      <div id="search_result">
+      </div>
+    <% else %>
+      <h2>アーティスト検索</h2>
+      <div class="search_word">
+        <h2>検索条件入力フォーム</h2>
+        <%= search_form_for(@q, url:search_events_path(id:'artist'), remote:true, method:'post')  do |f| %>
+          <%= f.label :アーティスト名 %>
+          <%= f.text_field :name_cont, class: 'form-control' %>
+          <%= f.label :ジャンル %>
+          <%= f.select :genre_eq, options_for_select(Artist.genres), include_blank:true, class: 'form-control' %><br>
+          <div class="search_btn">
+            <%= f.submit '検索', class: 'btn btn-primary' %>
+          </div>
+        <% end %>
+      </div>
+      <div id="search_result">
+      </div>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,12 @@
+<div id="follow_form_<%= artist.id %>">
+  <% unless current_user.following?(artist) %>
+    <%= form_for(current_user.follows.build(followed_id: artist.id), remote: true) do |f| %>
+      <%= f.hidden_field :followed_id %>
+      <%= f.submit "気になるアーティストに追加", class: "btn btn-large btn-primary" %>
+    <% end %>
+  <% else %>
+    <%= form_for(current_user.follows.find_by(followed_id: artist.id), html: { method: :delete }, remote: true) do |f| %>
+      <%= f.submit "つながりを解除", class: "btn btn-large" %>
+    <% end %>
+  <% end %>
+</div>

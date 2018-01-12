@@ -1,0 +1,27 @@
+.confirm_area {
+  margin-bottom: 150px;
+}
+
+.artist_menu {
+  height: auto;
+  background-color: #EEEEEE;
+  border-bottom: 1px solid #ccc;
+  text-align: left;
+  word-wrap: break-word;
+  padding: 10px;
+  .content_btn {
+    text-align: right;
+  }
+}
+
+.artist_menu > img {
+  width: 300px;
+  padding: 10px 10px 0 10px;
+  float: left;
+}
+
+.clearfix:after {
+  content: "";
+  display: block;
+  clear: both;
+}

@@ -1,0 +1,68 @@
+<div class="container">
+  <div class="wrapper">
+    <h2>イベント詳細</h2>
+    <div class="detail_screen clearfix">
+      <%=form_for(@event, url:{action: 'participation', id:@event.id} ) do |f| %>
+        <div class="all_area">
+          <div class="left_area">
+            <div class="image_area">
+              <h2><%= @event.title %></h2>
+              <%= photo_img(@event) %>
+            </div>
+            <div class="organizer_info">
+              <h2>イベント会場の情報</h2>
+              <div style='width: 100%;'>
+                 <div id="map" style='width: 100%; height: 33vh;'></div>
+               </div>
+            </div>
+          </div>
+          <div class="event_content">
+            <h3>【イベント内容】</h3>
+            <%= simple_format(@event.content) %>
+            <h3>【こんなアーティストにオススメ】</h3>
+            <%= @event.genre %>
+          </div>
+        </div>
+        <div class="btn_area">
+          <div class="menu_btn">
+            <% if user_signed_in? %>
+              <% unless current_user.organizer_flg %>
+                <% if check_participant(@event.id) == nil %>
+                  <%= f.submit "イベントに参加する", class:'btn btn-danger' %>
+                <% else %>
+                  <%= link_to "イベント参加を取り止める", {controller:"participants", action:"confirm", id:@event.id}, method: 'post', class: 'btn btn-default' %>
+                <% end %>
+              <% end %>
+            <% else %>
+              <%= f.submit "イベントに参加する", class:'btn btn-danger' %>
+            <% end %>
+            <%= link_to "イベント参加者一覧", participants_path(id: @event.id, name:"sankasha"),  class:'btn btn-success' %>
+          </div>
+          <div class="back_btn">
+            <%= link_to "戻る", events_path %>
+          </div>
+        </div>
+
+      <% end %>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  handler = Gmaps.build('Google');
+  handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
+    markers = handler.addMarkers([
+      {
+        "lat": <%= @event.latitude %>,
+        "lng": <%= @event.longitude %>,
+        "picture": {
+          "width":  32,
+          "height": 32
+        },
+        "infowindow": '<%= @event.address %>'
+      }
+    ]);
+    handler.bounds.extendWith(markers);
+    handler.fitMapToBounds();
+    handler.getMap().setZoom(15);
+  });
+</script>

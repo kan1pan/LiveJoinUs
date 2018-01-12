@@ -1,0 +1,38 @@
+<div class="container">
+  <div class="wrapper">
+    <h2>気になるアーティスト一覧</h2>
+    <div class="artist_list col-md-12">
+      <% if @followeds.blank? %>
+        <h2>現在、気になるアーティスト登録をしていません。</h2>
+      <% else %>
+        <% @followeds.each do |followed| %>
+          <% if followed.id != current_user.id %>
+              <div class="left_area col-md-6">
+                <div class="row">
+                  <div class="container-child col-md-7 col-sm-6 col-xs-6">
+                    <div class="follow">
+                      <div class="left">
+                        <strong><%= followed.name %></strong>
+                        <%= profile_img(followed) %>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="btn_menu">
+                    <% if current_user.organizer_flg? %>
+                      <div class="reverse_btn">
+                        <%= link_to "逆指名", root_path, class:"btn btn-success" %>
+                      </div>
+                    <% end %>
+                    <div class="artist_detail_btn">
+                      <%= link_to "アーティスト詳細", {controller:"artists", action:"show", id:followed.id, event_name: 'aritst_detail'}, class:"btn btn-success" %>
+                    </div>
+                    <%= render 'follow_form', artist: followed %>
+                  </div>
+                </div>
+              </div>
+          <% end %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>

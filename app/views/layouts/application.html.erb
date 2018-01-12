@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="//maps.google.com/maps/api/js?key=AIzaSyDxryRkDm_IjENMna75v3ykIcELsBJuglI"></script>
+  <script src="//cdn.rawgit.com/mahnunchik/markerclustererplus/master/dist/markerclusterer.min.js"></script>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+  <title>やろうぜライブ！</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+    <header>
+      <nav class="navbar top-title">
+        <%= link_to "やろうぜライブ！", events_path, class: "navbar-brand" %>
+      </nav>
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+          </div>
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+              <li><%= link_to "お問い合わせ", new_contact_path %></li>
+              <li><%= link_to "イベント検索", searchinfo_events_path(link_name:'event') %></li>
+              <li><%= link_to "アーティスト検索", searchinfo_events_path(link_name:'artist') %></li>
+              <% if user_signed_in? %>
+                <% if current_user.organizer_flg %>
+                  <% unless current_user.organizer.blank? %>
+                    <li><%= link_to 'マイページ', organizer_path(current_user.organizer.ids[0]) %></li>
+                    <li><%= link_to "イベント作成", new_event_path %></li>
+                  <% end %>
+                <% else %>
+                  <% unless current_user.artist.blank? %>
+                    <li><%= link_to 'マイページ', artist_path(current_user.artist.ids[0]) %></li>
+                  <% end %>
+                <% end %>
+                <li><%= link_to "ログアウト", destroy_user_session_path, method: :delete %></li>
+              <% else %>
+                <li><%= link_to "ログイン", new_user_session_path %></li>
+                <li><%= link_to "サインアップ", new_user_registration_path %></li>
+              <% end %>
+            </ul>
+          </div><!-- /.navbar-collapse -->
+        </div>
+      </nav>
+    </header>
+
+  <%= yield %>
+
+  <footer>
+    <p>運営会社DIVE INTO CODE株式会社</p>
+    <p>© 2015-2016 Copyright DIVE INTO CODE Corp.</p>
+  </footer>
+
+</body>
+</html>

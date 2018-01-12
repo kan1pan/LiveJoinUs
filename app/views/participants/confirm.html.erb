@@ -1,0 +1,32 @@
+<div class="container">
+    <div class="col-md-6 col-md-offset-3 col-sm-10 col-sm-offset-1">
+        <h3>以下のイベント参加を取り止める。</h3>
+
+        <%= form_for(@participant.event, url: participant_path(id: @participant.event.id), method: :delete) do |f| %>
+
+            <%= f.hidden_field :title %>
+            <%= f.hidden_field :date %>
+            <%= f.hidden_field :content %>
+            <%= f.hidden_field :image %>
+            <%= f.hidden_field :image_cache %>
+
+            <p><%= photo_img(@participant.event) %></p>
+            <p>イベントタイトル：<%= @participant.event.title %></p>
+            <p>イベント開催日：<%= @participant.event.date %></p>
+            <p>イベント内容：<%= simple_format(@participant.event.content) %></p>
+            <%= f.submit "キャンセル",class: 'btn btn-primary btn-block'  %><br>
+        <% end %>
+
+        <%= form_for(@participant.event, url: participants_path(@participant.participant_id), method:'get') do |f| %>
+          <%= f.hidden_field :title %>
+          <%= f.hidden_field :date %>
+          <%= f.hidden_field :content %>
+          <%= f.hidden_field :image %>
+          <%= f.hidden_field :image_cache %>
+          <div class="confirm_area_btn">
+            <%= f.submit "もどる", name:'back', class: 'btn btn-default btn-block' %>
+          </div>
+        <% end %>
+        <br>
+    </div>
+</div>

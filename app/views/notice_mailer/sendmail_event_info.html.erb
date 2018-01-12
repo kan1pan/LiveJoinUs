@@ -1,0 +1,13 @@
+<%= @model.name %> 様<br><br>
+
+いつもご利用ありがとうございます。<br>
+新着イベントのお知らせです。<br><br>
+
+<% @events.each do |event| %>
+  <div class="event_menu clearfix">
+    タイトル：<strong><%= event.title %></strong><br>
+    日時：<%= event.date %><br>
+    <%= ApplicationController.helpers.photo_img(event) %><br>
+    詳細は→<%= link_to "こちら", event_path(event) %><br><br>
+  </div>
+<% end %>

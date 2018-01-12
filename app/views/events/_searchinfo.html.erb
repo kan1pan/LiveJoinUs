@@ -1,0 +1,67 @@
+<div class="search_result_list">
+  <h2>検索結果一覧</h2>
+    <% if @results.model.name == 'Artist' %>
+      <% if @results.blank? %>
+        <div class="none_result">
+          <h2>該当するアーティストが見つかりませんでした</h2>
+        </div>
+      <% else %>
+        <% @results.each do |artist| %>
+          <div class="artist_menu">
+            <%= artist.name %><br>
+            <%= artist.genre %><br>
+            <%= artist.self_introduction %><br>
+            <% if user_signed_in? %>
+              <% if artist.user_id != current_user.id || current_user.organizer_flg %>
+                <%= link_to "メッセージ送る", conversations_path(sender_id: current_user.id, recipient_id: artist.id), method: 'post' %>
+              <% end %>
+            <% end %>
+            <%= link_to "アーティスト詳細", {controller:"artists", action:"show", id:artist.id, event_name: 'aritst_detail'}  %>
+            <% if current_user.organizer_flg %>
+              <%= link_to "逆指名する", {controller:"reversenominations", action:"new", artist_id:artist.id} %>
+            <% end %>
+          </div>
+        <% end %>
+        <%= render partial: 'paginate_form', locals: { id: 'artist' }  %>
+      <% end %>
+    <% else %>
+      <% if @results.blank? %>
+        <div class="none_result">
+          <h2>該当するイベントが見つかりませんでした</h2>
+        </div>
+      <% else %>
+        <% @results.each do |event| %>
+          <div class="event_menu clearfix">
+            <%= link_to event_path(event) do %>
+              <strong><%= event.title %></strong><br>
+            <% end %>
+            <%= event.date %><br>
+            <%= photo_img(event) %>
+            <% if event.content.length > 500  %>
+              <%= event.content.truncate(535) %>
+              <%= link_to "詳細を表示", event_path(event) %><br>
+            <% else %>
+              <%= event.content %>
+            <% end %>
+            <div class="content_btn">
+              <% if user_signed_in? %>
+                <% if current_user.organizer_flg? %>
+                  <%= link_to "編集", edit_event_path(event.id), class: 'btn btn-default btn-sm btn-success' %>
+                  <%= link_to "削除", event_path(event.id), method: :delete, data: { confirm: '本当に削除していいですか？'}, class: 'btn btn-default btn-sm btn btn-danger' %>
+                <% else %>
+                  <% if check_participant(event.id) == nil %>
+                    <%= link_to "イベントに参加する", {controller:"events", action:"participation", id:event.id}, class: 'btn btn-danger' %>
+                  <% else %>
+                    <%= link_to "イベント参加を取り止める", {controller:"participants", action:"confirm", id:event.id}, method: 'post', class: 'btn btn-default' %>
+                  <% end %>
+                <% end %>
+              <% else %>
+                <%= link_to "イベントに参加する", {controller:"events", action:"participation", id:event.id}, class: 'btn btn-danger' %>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+        <%= render partial: 'paginate_form', locals: { id: 'event' }  %>
+      <% end %>
+    <% end %>
+</div>
