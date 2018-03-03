@@ -33,6 +33,7 @@ gem 'kaminari'
 gem 'whenever', require: false
 gem 'nokogiri'
 gem 'premailer-rails'
+gem "rmagick", '~> 2.13.1', :require => 'RMagick'
 
 group :development, :test do
   gem 'byebug'

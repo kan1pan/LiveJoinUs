@@ -9,7 +9,7 @@ class FollowsController < ApplicationController
   end
 
   def destroy
-    @artist = Concern.find(params[:id]).followed
+    @artist = Follow.find(params[:id]).followed
     current_user.unfollow!(@artist)
     respond_with @artist
   end

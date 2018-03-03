@@ -23,10 +23,10 @@ ActiveRecord::Schema.define(version: 20180108053027) do
     t.text     "self_introduction"
     t.string   "singing"
     t.string   "play_video"
-    t.integer  "accsess_count",     default: 0
     t.integer  "user_id"
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
+    t.integer  "accsess_count",     default: 0
     t.string   "avatar"
   end
 
@@ -80,6 +80,8 @@ ActiveRecord::Schema.define(version: 20180108053027) do
     t.datetime "updated_at",                      null: false
   end
 
+  add_index "messages", ["user_id"], name: "index_messages_on_user_id", using: :btree
+
   create_table "notifications", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "message_id"
@@ -106,13 +108,6 @@ ActiveRecord::Schema.define(version: 20180108053027) do
     t.float    "latitude"
     t.float    "longitude"
     t.string   "address"
-  end
-
-  create_table "participant", force: :cascade do |t|
-    t.integer  "event_id"
-    t.integer  "participant_id"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
   end
 
   create_table "participants", force: :cascade do |t|
@@ -144,6 +139,7 @@ ActiveRecord::Schema.define(version: 20180108053027) do
     t.boolean  "organizer_flg",          default: false
     t.datetime "created_at",                             null: false
     t.datetime "updated_at",                             null: false
+    t.string   "avatar"
     t.string   "confirmation_token"
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
@@ -158,4 +154,7 @@ ActiveRecord::Schema.define(version: 20180108053027) do
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   add_index "users", ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true, using: :btree
 
+  add_foreign_key "messages", "users"
+  add_foreign_key "notifications", "messages"
+  add_foreign_key "notifications", "users"
 end
