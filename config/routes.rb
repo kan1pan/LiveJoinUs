@@ -22,6 +22,7 @@ Rails.application.routes.draw do
     get :bygenre, on: :collection
     get :showlink, on: :collection
     get :myevents, on: :collection
+    get :tutorial, on: :collection
   end
 
   resources :artists do

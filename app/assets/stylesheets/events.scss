@@ -4,10 +4,6 @@ textarea {
   height: 250px;
 }
 
-.detail_screen {
-  // margin-bottom: 150px;
-}
-
 .detail_screen > .back_btn {
   text-align: right;
 }
@@ -108,4 +104,34 @@ textarea {
 
 .prof_img {
   width: 100%;
+}
+
+.tutorial_screen {
+  position: relative;
+  padding-top: 1%;
+  padding-bottom: 27%;
+  background-size: cover;
+  background-image: image-url("gahag-0114085104.jpg");
+  width: 100%;
+  -webkit-filter: grayscale(100%);
+  filter: grayscale(100%);
+
+  p {
+    position: absolute;
+    color: white;
+    font-weight: bold;
+    font-size: 3vw;
+    font-family: sans-serif;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%,-50%);
+    -webkit-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+    margin:0;
+    padding:0;
+    text-align: center;
+  }
+  img {
+    width: 100%;
+  }
 }

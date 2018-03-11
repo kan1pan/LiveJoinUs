@@ -1,7 +1,9 @@
+<% provide(:title, "お問い合わせ") %>
+
 <div class="container">
     <div class="wrapper col-md-8 col-md-offset-2 col-sm-10">
 
-        <h1>お問い合わせ画面</h1>
+        <h1>お問い合わせ</h1>
 
         <%=form_for(@contact, url:confirm_contacts_path) do |contact| %>
             <% if @contact.errors.any? %>

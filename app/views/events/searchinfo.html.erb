@@ -1,3 +1,9 @@
+<% if params[:link_name] == 'event' %>
+  <% provide(:title, "イベント検索") %>
+<% else %>
+  <% provide(:title, "アーティスト検索") %>
+<% end %>
+
 <div class="container">
   <div class="wrapper">
     <% if params[:link_name] == 'event' %>

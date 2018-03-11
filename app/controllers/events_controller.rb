@@ -1,6 +1,9 @@
 class EventsController < ApplicationController
   before_action :set_event, only:[:show, :edit, :update, :destroy, :showlink]
-  before_action :authenticate_user!, except: [:index, :show, :searchinfo, :search]
+  before_action :authenticate_user!, except: [:index, :show, :searchinfo, :search, :tutorial]
+
+  def tutorial
+  end
 
   def index
     @events = Event.all.order(created_at: :desc)

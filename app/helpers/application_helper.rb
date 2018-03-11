@@ -1,4 +1,13 @@
 module ApplicationHelper
+  def full_title(page_title)
+    base_title = "Live!JoinUs!!"
+    if page_title.blank?
+      base_title
+    else
+      "#{page_title} | #{base_title}"
+    end
+  end
+
   def profile_img(user)
     return image_tag(user.avatar, alt: user.name) if user.avatar?
 
