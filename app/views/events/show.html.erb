@@ -4,6 +4,7 @@
   <div class="wrapper">
     <h2>イベント詳細</h2>
     <div class="detail_screen clearfix">
+      <% binding.pry %>
       <%=form_for(@event, url:{action: 'participation', id:@event.id} ) do |f| %>
         <div class="all_area">
           <div class="left_area">

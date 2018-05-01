@@ -15,4 +15,20 @@ class Event < ActiveRecord::Base
   geocoded_by :address
   after_validation :geocode, if: lambda {|obj| obj.address_changed?}
 
+  def search(conditions, page)
+    q = Event.ransack(conditions)
+    results = q.result
+    results = results.page(page).per(5)
+  end
+
+  def self.delete_event
+    events = Event.all
+    
+    events.each do |event|
+      if Date.today > event.date
+        event.delete
+      end
+    end
+  end
+
 end

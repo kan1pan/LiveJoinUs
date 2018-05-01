@@ -32,4 +32,10 @@ class Artist < ActiveRecord::Base
     end
   end
 
+  def search(conditions, page)
+    q = Artist.ransack(conditions)
+    results = q.result.order(created_at: :asc)
+    results = results.page(page).per(3)
+  end
+
 end

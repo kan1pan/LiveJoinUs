@@ -1,6 +1,7 @@
 class EventsController < ApplicationController
   before_action :set_event, only:[:show, :edit, :update, :destroy, :showlink]
-  before_action :authenticate_user!, except: [:index, :show, :searchinfo, :search, :tutorial]
+  before_action :authenticate_user!, except: [:index, :show, :searchinfo, :search, :tutorial, :bygenre]
+  before_action :delete_event, only:[:index]
 
   def tutorial
   end
@@ -64,20 +65,17 @@ class EventsController < ApplicationController
   end
 
   def update
-
     unless params[:action_name].blank?
       if params[:action_name] == 'participation'
         participation
       end
     else
-
       if @event.update(events_params)
         redirect_to events_path, notice: 'イベント内容を変更しました！'
       else
         render 'new'
       end
     end
-
   end
 
   def destroy
@@ -105,14 +103,12 @@ class EventsController < ApplicationController
   def search
     respond_to do |format|
       if params[:id] == 'event'
-        @q = Event.ransack(params[:q])
-        @results = @q.result
-        @results = @results.page(params[:page]).per(5)
+        @model = Event.new
       else
-        @q = Artist.ransack(params[:q])
-        @results = @q.result.order(created_at: :asc)
-        @results = @results.page(params[:page]).per(3)
+        @model = Artist.new
       end
+      binding.pry
+      @results = @model.search(params[:q], params[:page])
 
       format.html
       format.js { render :searchinfo }
@@ -135,4 +131,9 @@ class EventsController < ApplicationController
     def set_event
       @event = Event.find(params[:id])
     end
+
+    def delete_event
+      Event.delete_event
+    end
+
 end
