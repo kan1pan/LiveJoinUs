@@ -24,4 +24,8 @@ class Organizer < ActiveRecord::Base
       # self.longitude = coords[1]
   end
 
+  def self.get_loginUser(id)
+    Organizer.find_by(user_id: id)
+  end
+
 end

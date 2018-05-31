@@ -38,4 +38,25 @@ class Artist < ActiveRecord::Base
     results = results.page(page).per(3)
   end
 
+  def self.pickup_artist(back)
+    if back
+      artist = Artist.new(artist_params)
+    else
+      artist = Artist.new
+    end
+  end
+
+  def self.get_loginUser(id)
+    Artist.find_by(user_id: id)
+  end
+
+  def artist_params
+    params.require(:artist).permit(:name, :genre, :self_introduction, :singing, :singing_cache, :play_video, :play_video_cache, :avatar, :avatar_cache)
+  end
+
+  def self.artist_params(params)
+    params.require(:artist).permit(:name, :genre, :self_introduction, :singing, :singing_cache, :play_video, :play_video_cache, :avatar, :avatar_cache)
+  end
+
+
 end

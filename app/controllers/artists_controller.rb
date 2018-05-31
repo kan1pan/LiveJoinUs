@@ -15,19 +15,15 @@ class ArtistsController < ApplicationController
   end
 
   def new
-    if  params[:back]
-      @artist = Artist.new(artist_params)
-    else
-      @artist = Artist.new
-    end
+    @artist = Artist.pickup_artist(params[:back])
   end
 
   def create
-    @artist = Artist.create(artist_params)
+    @artist = Artist.create(Artist.artist_params(params))
     @artist.user_id = current_user.id
 
     if @artist.save
-      redirect_to events_path, notice: "アーティスト登録が完了しました！"
+      redirect_to root_path, notice: "アーティスト登録が完了しました！"
     else
       render 'new'
     end
@@ -38,34 +34,26 @@ class ArtistsController < ApplicationController
   end
 
   def update
-    if @artist.update(artist_params)
-      redirect_to events_path, notice: "アーティスト情報を更新しました！"
+    if @artist.update(Artist.artist_params(params))
+      redirect_to root_path, notice: "アーティスト情報を更新しました！"
     else
       render 'new'
     end
   end
 
   def confirm
-    @artist = Artist.new(artist_params)
+    @artist = Artist.new(Artist.artist_params(params))
     render 'new' if @artist.invalid?
   end
 
   private
-    def artist_params
-      params.require(:artist).permit(:name, :genre, :self_introduction, :singing, :singing_cache, :play_video, :play_video_cache, :avatar, :avatar_cache)
-    end
-
     def set_artist
       @artist = Artist.find(params[:id])
     end
 
     def set_loginUser
       if user_signed_in?
-        if current_user.organizer_flg == true
-          @loginUser = Organizer.find_by(user_id: current_user.id)
-        else
-          @loginUser = Artist.find_by(user_id: current_user.id)
-        end
+        @loginUser =  current_user.organizer_flg ? Organizer.get_loginUser(current_user.id) : Artist.get_loginUser(current_user.id)
       end
     end
 

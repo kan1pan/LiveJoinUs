@@ -25,20 +25,5 @@ class Conversation < ActiveRecord::Base
         Organizer.find_by(user_id: user.id)
       end
     end
-
-    # if current_user.class.name == 'Artist'
-    #   if sender_id == current_user.artist.ids[0]
-    #     Artist.find(recipient_id)
-    #   elsif recipient_id == current_user.artist.ids[0]
-    #     Artist.find(sender_id)
-    #   end
-    # else
-    #   if sender_id == current_user.organizer.ids[0]
-    #     Organizer.find(recipient_id)
-    #   elsif recipient_id == current_user.organizer.ids[0]
-    #     Organizer.find(sender_id)
-    #   end
-    # end
-
   end
 end

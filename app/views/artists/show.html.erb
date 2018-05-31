@@ -38,16 +38,10 @@
     <div class="row btn_area">
         <div class="menu_btn">
           <% if user_signed_in? %>
-            <% if params[:id] == @loginUser.id.to_s %>
-              <%= link_to 'マイページを編集する', edit_artist_path(@artist.id), id:'mypage_edit', class:'btn btn-default' %>
-              <%= link_to 'ユーザー情報を編集する', edit_user_registration_path(current_user.id), class:'btn btn-danger' %>
-            <% end %>
-            <% if current_user.organizer_flg %>
-              <%= link_to '逆指名', root_path , class: 'btn btn-default btn-sm btn-success' %>
-              <%= link_to "メッセージ送る", conversations_path(sender_id: current_user.id, recipient_id: @artist.id), method: 'post' %>
-              <%= render 'follow_form', artist: @artist %>
-            <% else %>
+            <% unless @loginUser.user.organizer_flg %>
               <% if params[:id] == @loginUser.id.to_s %>
+                <%= link_to 'マイページを編集する', edit_artist_path(@artist.id), id:'mypage_edit', class:'btn btn-default' %>
+                <%= link_to 'ユーザー情報を編集する', edit_user_registration_path(current_user.id), class:'btn btn-danger' %>
                 <%= link_to "メッセージ一覧", conversations_path(sender_id: current_user.id, recipient_id: @artist.id), class: 'btn btn-primary' %>
                 <%= link_to "気になるアーティスト一覧へ", artists_path, class: 'btn btn-warning' %>
                 <%= link_to "参加予定イベント一覧へ", participants_path(id: @artist.id), class: 'btn btn-info' %>
@@ -55,6 +49,10 @@
                 <%= link_to "メッセージ送る", conversations_path(sender_id: current_user.id, recipient_id: @artist.id), method: 'post' %>
                 <%= render 'follow_form', artist: @artist %>
               <% end %>
+            <% else %>
+              <%= link_to '逆指名', root_path , class: 'btn btn-default btn-sm btn-success' %>
+              <%= link_to "メッセージ送る", conversations_path(sender_id: current_user.id, recipient_id: @artist.id), method: 'post' %>
+              <%= render 'follow_form', artist: @artist %>
             <% end %>
           <% end %>
         </div>

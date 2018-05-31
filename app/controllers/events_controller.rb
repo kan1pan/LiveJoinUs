@@ -107,7 +107,6 @@ class EventsController < ApplicationController
       else
         @model = Artist.new
       end
-      binding.pry
       @results = @model.search(params[:q], params[:page])
 
       format.html
